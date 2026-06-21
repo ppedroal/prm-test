@@ -1,0 +1,78 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlite"
+    url = env("DATABASE_URL")
+}
+
+model Company {
+    id String @id @default(cuid())
+    name String
+    website String?
+    contacts Contact[]
+    deals Deal[]
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Contact {
+    id String @id @default(cuid())
+    name String
+    email String @unique
+    phone String?
+    companyId String?
+    company Company? @relation(fields: [companyId], references: [id])
+    deals Deal[]
+    tasks Task[]
+    notes Note[]
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Deal {
+  id        String    @id @default(cuid())
+  title     String
+  value     Float
+  stage     DealStage @default(LEAD)
+  contactId String?
+  contact   Contact?  @relation(fields: [contactId], references: [id])
+  companyId String?
+  company   Company?  @relation(fields: [companyId], references: [id])
+  tasks     Task[]
+  notes     Note[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+enum DealStage {
+    LEAD
+    QUALIFIED
+    PROPOSAL
+    NEGOTIATION
+    WON
+    LOST
+}
+
+model Task {
+    id String @id @default(cuid())
+    title String
+    done Boolean @default(false)
+    dueDate DateTime?
+    contactId String?
+    contact Contact? @relation(fields: [contactId], references: [id])
+    dealId String?
+    deal Deal? @relation(fields: [dealId], references: [id])
+    createdAt DateTime @default(now())
+}
+
+model Note {
+    id String @id @default(cuid())
+    content String
+    contactId String?
+    contact Contact? @relation(fields: [contactId], references: [id])
+    dealId String?
+    deal Deal? @relation(fields: [dealId], references: [id])
+    createdAt DateTime @default(now())
+}
