@@ -1,6 +1,6 @@
 import { NotFoundError } from '../../../errors/AppError';
 import { prisma } from '../../../lib/prisma';
-import { getCompanyById } from '../shared/getCompanyById.service';
+import { getCompanyById } from '../getById/getCompanyById.service';
 
 export async function deleteCompany(id: string) {
     const company = await getCompanyById(id);

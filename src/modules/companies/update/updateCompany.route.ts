@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { asyncHandler } from '../../../middlewares/asyncHandler';
 import { validate } from '../../../middlewares/validate';
-import { idParamSchema } from '../shared/idParam.schema';
+import { idParamSchema } from '../../../middlewares/idParamSchema';
 import { updateCompanySchema } from './updateCompany.schema';
 import { updateCompany } from './updateCompany.service';
 

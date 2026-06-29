@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { asyncHandler } from '../../../middlewares/asyncHandler';
 import { validate } from '../../../middlewares/validate';
-import { idParamSchema } from '../shared/idParam.schema';
-import { getCompanyById } from '../shared/getCompanyById.service';
+import { idParamSchema } from '../../../middlewares/idParamSchema';
+import { getCompanyById } from './getCompanyById.service';
 
 export const getCompanyByIdRoute = Router();
 

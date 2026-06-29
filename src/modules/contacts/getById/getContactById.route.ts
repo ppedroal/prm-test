@@ -2,17 +2,16 @@ import { Router } from 'express';
 import { asyncHandler } from '../../../middlewares/asyncHandler';
 import { validate } from '../../../middlewares/validate';
 import { idParamSchema } from '../../../middlewares/idParamSchema';
-import { deleteCompany } from './deleteCompany.service';
+import { getContactById } from './getContactById.service';
 
-export const deleteCompanyRoute = Router();
+export const getContactByIdRoute = Router();
 
-deleteCompanyRoute.delete(
+getContactByIdRoute.get(
     '/:id',
     validate({ params: idParamSchema }),
-
     asyncHandler(async (req, res) => {
         const { id } = req.params as { id: string };
-        await deleteCompany(id);
-        res.json({ message: 'Company deleted successfully' });
+        const contact = await getContactById(id);
+        res.json(contact);
     }),
 );
